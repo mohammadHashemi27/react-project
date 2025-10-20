@@ -15,7 +15,7 @@ function App() {
       </GridItem>
       {/* show  */}
       <Show when={showAside}>
-        <GridItem area="aside">aside</GridItem>
+        <GridItem area="aside" padding={2}>aside</GridItem>
       </Show>
 
       <GridItem area="main">
