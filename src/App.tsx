@@ -13,7 +13,7 @@ function App() {
       <GridItem area="nav">
         <NavBar />
       </GridItem>
-      {/* show  */}
+      
       <Show when={showAside}>
         <GridItem area="aside" padding={2}>aside</GridItem>
       </Show>
