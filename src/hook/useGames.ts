@@ -6,9 +6,11 @@ export interface Game {
   name: string;
   background_image: string;
   released: string;
-  updated: string;
-  rating: number;
+
+  platforms: { platform: { id: number; name: string; slug: string } }[];
+  metacritic: number;
 }
+
 interface FetchGameResponse {
   count: number;
   results: Game[];
