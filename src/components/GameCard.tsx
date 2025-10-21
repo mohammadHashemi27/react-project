@@ -45,7 +45,7 @@ export const GameCard = ({ game }: Props) => {
 
   return (
     <Card.Root
-      maxW="sm"
+      width={"full"}
       overflow="hidden"
       shadow="md"
       borderRadius="xl"
