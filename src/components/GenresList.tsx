@@ -16,7 +16,7 @@ export const GenresList = () => {
   const hoverBg = useColorModeValue("gray.200", "gray.700");
   const textColor = useColorModeValue("gray.800", "whiteAlpha.900");
 
-  const skeletonCount = 10;
+  const skeletonCount = 15;
 
   return (
     <Card.Root

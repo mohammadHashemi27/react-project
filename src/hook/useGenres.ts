@@ -17,6 +17,8 @@ export const useGenres = () => {
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [isActive, setActive] = useState(true);
+
+  
   useEffect(() => {
     apiClient
       .get<FetchGenresResponse>("/genres")

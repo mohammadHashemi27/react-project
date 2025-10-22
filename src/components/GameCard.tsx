@@ -8,18 +8,12 @@ import {
   Heading,
   CardBody,
   CardFooter,
-  Tooltip,
   Badge,
   Flex,
 } from "@chakra-ui/react";
-import {
-  FaWindows,
-  FaXbox,
-  FaPlaystation,
-  FaApple,
-  FaAndroid,
-} from "react-icons/fa";
+import { FaXbox, FaPlaystation, FaGamepad } from "react-icons/fa";
 import { BsNintendoSwitch } from "react-icons/bs";
+import { FaWindows } from "react-icons/fa6";
 import type { JSX } from "react";
 
 interface Props {
@@ -28,24 +22,26 @@ interface Props {
 
 export const GameCard = ({ game }: Props) => {
   const iconMap: Record<string, JSX.Element> = {
-    pc: <FaWindows color="#3b82f6" />,
-    xbox: <FaXbox color="#107c10" />,
-    playstation: <FaPlaystation color="#00439c" />,
-    nintendo: <BsNintendoSwitch color="#e60012" />,
-    mac: <FaApple color="#6e6e6e" />,
-    android: <FaAndroid color="#3ddc84" />,
+    pc: <FaWindows />,
+    xbox: <FaXbox />,
+    playstation: <FaPlaystation />,
+    nintendo: <BsNintendoSwitch />,
   };
 
+  // فقط پلتفرم‌های مورد نظر
+  const allowedPlatforms = ["pc", "xbox", "playstation", "nintendo"];
   const platforms = game.platforms
-    ?.map((p) => p.platform.slug)
-    .filter((slug) => iconMap[slug.split("-")[0]])
-    .slice(0, 5);
+    ?.map((p) => p.platform.slug.split("-")[0])
+    .filter((slug) => allowedPlatforms.includes(slug))
+    .slice(0, 5); // حداکثر 5 پلتفرم
 
   const metaScore = Number(game.metacritic);
+  const iconColor = "#4A5568"; // رنگ یکدست و حرفه‌ای
+  const iconSize = "20px"; // سایز یکسان برای تمام آیکون‌ها
 
   return (
     <Card.Root
-      width={"full"}
+      width="full"
       overflow="hidden"
       shadow="md"
       borderRadius="xl"
@@ -56,10 +52,13 @@ export const GameCard = ({ game }: Props) => {
         src={game.background_image || "https://via.placeholder.com/400"}
         alt={game.name}
         borderTopRadius="xl"
+        objectFit="cover"
+        w="full"
+        h="200px"
       />
 
       <CardBody textAlign="center">
-        <Heading size="md" mb={2}>
+        <Heading size="md" mb={1}>
           {game.name}
         </Heading>
         <Text fontSize="sm" color="gray.500" mb={3}>
@@ -67,17 +66,17 @@ export const GameCard = ({ game }: Props) => {
         </Text>
 
         <HStack justify="center" gap={3} mb={4}>
-          {platforms?.map((slug) => {
-            const key = slug.split("-")[0];
+          {platforms?.map((slug, idx) => {
+            const Icon = iconMap[slug] || <FaGamepad />;
             return (
-              <Tooltip.Root key={key}>
-                <span>{iconMap[key]}</span>
-              </Tooltip.Root>
+              <span key={idx} style={{ color: iconColor, fontSize: iconSize }}>
+                {Icon}
+              </span>
             );
           })}
         </HStack>
 
-        <Flex align="center" justify="center" gap={2}>
+        <Flex align="center" justify="center" gap={2} mb={3}>
           <Text fontSize="md" color="gray.600">
             Metacritic:
           </Text>
