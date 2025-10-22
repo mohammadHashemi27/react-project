@@ -20,6 +20,7 @@ export const useGames = () => {
   const [games, setGames] = useState<Game[]>([]);
   const [error, setError] = useState("");
   const [isLoading, setLoading] = useState(true);
+  const [isActive, setActive] = useState(true);
 
   useEffect(() => {
     apiClient
@@ -27,12 +28,14 @@ export const useGames = () => {
       .then((res) => {
         setGames(res.data.results);
         setLoading(false);
+        setActive(false);
       })
       .catch((err) => {
         setError(err.message);
         setLoading(false);
+        setActive(false);
       });
   }, []);
 
-  return { games, error, isLoading };
+  return { games, error, isLoading, isActive };
 };
