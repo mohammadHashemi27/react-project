@@ -15,9 +15,10 @@ import { SortDropdown } from "./components/Sort";
 
 function App() {
   const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
-  const [searchText, setSearchText] = useState(""); // متن سرچ
+  const [searchText, setSearchText] = useState("");
   const showAside = useBreakpointValue({ base: false, lg: true });
   const [sortOrder, setSortOrder] = useState("");
+  const [selectedPlatform, setSelectedPlatform] = useState<string>("");
   return (
     <Grid
       templateAreas={{
@@ -44,13 +45,17 @@ function App() {
 
       <GridItem area="main" padding={2}>
         <HStack marginBottom={5}>
-          <Platform />
+          <Platform
+            selectedPlatform={selectedPlatform}
+            onSelectPlatform={setSelectedPlatform}
+          />
           <SortDropdown onSelectSortOrder={setSortOrder} />
         </HStack>
         <GameGrid
           selectedGenre={selectedGenre}
           searchText={searchText}
           sortOrder={sortOrder}
+          selectedPlatform={selectedPlatform} // ← اضافه شد
         />
       </GridItem>
     </Grid>

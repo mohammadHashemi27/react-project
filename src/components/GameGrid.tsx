@@ -4,20 +4,34 @@ import { GameCard } from "./GameCard";
 import { useGames, type Game } from "@/hook/useGames";
 import type { Genres } from "@/hook/useGenres";
 
+interface GameGridProps {
+  selectedGenre: Genres | null;
+  searchText: string;
+  sortOrder: string;
+  selectedPlatform: string; 
+}
+
 const GameGrid = ({
   selectedGenre,
   searchText,
   sortOrder,
-}: {
-  selectedGenre: Genres | null;
-  searchText: string;
-  sortOrder: string;
-}) => {
+  selectedPlatform, 
+}: GameGridProps) => {
   const { games, isLoading } = useGames(selectedGenre, sortOrder);
 
-  const filteredGames = games.filter((game: { name: string }) =>
-    game.name.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const filteredGames = games.filter((game: Game) => {
+    const matchesSearch = game.name
+      .toLowerCase()
+      .includes(searchText.toLowerCase());
+    const matchesPlatform = selectedPlatform
+      ? game.parent_platforms.some(
+          (p: { platform: { name: string; }; }) =>
+            p.platform.name.toLowerCase() === selectedPlatform.toLowerCase()
+        )
+      : true;
+
+    return matchesSearch && matchesPlatform;
+  });
 
   const skeletons = Array.from({ length: 8 });
 
@@ -38,4 +52,5 @@ const GameGrid = ({
     </SimpleGrid>
   );
 };
+
 export default GameGrid;

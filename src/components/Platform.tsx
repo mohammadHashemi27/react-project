@@ -2,8 +2,11 @@
 import { Button, Menu, Portal } from "@chakra-ui/react";
 import { usePlatforms } from "@/hook/usePlatforms";
 import { useColorModeValue } from "@/components/ui/color-mode";
-
-const PlatformDropdown = () => {
+interface Props {
+  selectedPlatform: string;
+  onSelectPlatform: (platform: string) => void;
+}
+const PlatformDropdown = ({ selectedPlatform, onSelectPlatform }: Props) => {
   const { platforms } = usePlatforms();
 
   const bgMenu = useColorModeValue("gray.50", "gray.800");
@@ -13,7 +16,7 @@ const PlatformDropdown = () => {
     <Menu.Root>
       <Menu.Trigger asChild>
         <Button size="sm" variant="outline">
-          Platform
+          {selectedPlatform ? selectedPlatform : "Platform"}
         </Button>
       </Menu.Trigger>
 
@@ -25,6 +28,7 @@ const PlatformDropdown = () => {
                 key={platform.id}
                 value={platform.slug}
                 _hover={{ bg: hoverItem }}
+                onClick={() => onSelectPlatform(platform.slug)}
               >
                 {platform.name}
               </Menu.Item>

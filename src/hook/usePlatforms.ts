@@ -13,6 +13,7 @@ interface FetchPlatformsResponse {
 }
 
 const RAWG_API_KEY = "66aa294028d0476ea552012b99adad79";
+
 export const usePlatforms = () => {
   const [platforms, setPlatforms] = useState<Platform[]>([]);
   const [isLoading, setIsLoading] = useState(true);
