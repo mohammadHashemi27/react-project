@@ -54,7 +54,7 @@ export const GameCard = ({ game }: Props) => {
         h="200px"
       />
 
-      <Card.Body textAlign="center">
+      <Card.Body textAlign="center" alignItems={"stretch"}>
         <Heading size="md" mb={1}>
           {game.name}
         </Heading>
