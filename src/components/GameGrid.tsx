@@ -7,11 +7,13 @@ import type { Genres } from "@/hook/useGenres";
 const GameGrid = ({
   selectedGenre,
   searchText,
+  sortOrder,
 }: {
   selectedGenre: Genres | null;
   searchText: string;
+  sortOrder: string;
 }) => {
-  const { games, isLoading } = useGames(selectedGenre);
+  const { games, isLoading } = useGames(selectedGenre, sortOrder);
 
   const filteredGames = games.filter((game: { name: string }) =>
     game.name.toLowerCase().includes(searchText.toLowerCase())

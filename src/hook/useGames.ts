@@ -15,16 +15,17 @@ interface FetchGamesResponse {
   results: Game[];
 }
 
-export const useGames = (selectedGenre: Genres | null) => {
+export const useGames = (selectedGenre: Genres | null, sortOrder: string) => {
   const [games, setGames] = useState<Game[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     setIsLoading(true);
+
     apiClient
       .get<FetchGamesResponse>("/games", {
-        params: { genres: selectedGenre?.id },
+        params: { genres: selectedGenre?.id, ordering: sortOrder },
       })
       .then((res) => {
         setGames(res.data.results);
@@ -34,7 +35,7 @@ export const useGames = (selectedGenre: Genres | null) => {
         setError(err.message);
         setIsLoading(false);
       });
-  }, [selectedGenre]);
+  }, [selectedGenre, sortOrder]); // ← اضافه کردن sortOrder به dependencies
 
   return { games, isLoading, error };
 };

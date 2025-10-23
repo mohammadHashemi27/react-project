@@ -1,16 +1,23 @@
 import { useState } from "react";
-import { Grid, GridItem, Show, useBreakpointValue } from "@chakra-ui/react";
+import {
+  Grid,
+  GridItem,
+  HStack,
+  Show,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { NavBar } from "./components/NavBar";
 import GameGrid from "./components/GameGrid";
 import { GenresList } from "./components/GenresList";
 import type { Genres } from "@/hook/useGenres";
 import Platform from "./components/Platform";
+import { SortDropdown } from "./components/Sort";
 
 function App() {
   const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
   const [searchText, setSearchText] = useState(""); // متن سرچ
   const showAside = useBreakpointValue({ base: false, lg: true });
-
+  const [sortOrder, setSortOrder] = useState("");
   return (
     <Grid
       templateAreas={{
@@ -36,8 +43,15 @@ function App() {
       </Show>
 
       <GridItem area="main" padding={2}>
-        <Platform />
-        <GameGrid selectedGenre={selectedGenre} searchText={searchText} />
+        <HStack marginBottom={5}>
+          <Platform />
+          <SortDropdown onSelectSortOrder={setSortOrder} />
+        </HStack>
+        <GameGrid
+          selectedGenre={selectedGenre}
+          searchText={searchText}
+          sortOrder={sortOrder}
+        />
       </GridItem>
     </Grid>
   );
