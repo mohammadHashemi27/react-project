@@ -1,41 +1,40 @@
 import apiClient from "@/services/api-client";
 import { useEffect, useState } from "react";
+import type { Genres } from "../hook/useGenres";
 
 export interface Game {
   id: number;
   name: string;
   background_image: string;
   released: string;
-
-  platforms: { platform: { id: number; name: string; slug: string } }[];
   metacritic: number;
+  platforms: { platform: { slug: string } }[];
 }
 
-interface FetchGameResponse {
-  count: number;
+interface FetchGamesResponse {
   results: Game[];
 }
 
-export const useGames = () => {
+export const useGames = (selectedGenre: Genres | null) => {
   const [games, setGames] = useState<Game[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
-  const [isLoading, setLoading] = useState(true);
-  const [isActive, setActive] = useState(true);
 
   useEffect(() => {
+    setIsLoading(true);
     apiClient
-      .get<FetchGameResponse>("/games")
+      .get<FetchGamesResponse>("/games", {
+        params: { genres: selectedGenre?.id },
+      })
       .then((res) => {
         setGames(res.data.results);
-        setLoading(false);
-        setActive(false);
+        setIsLoading(false);
       })
       .catch((err) => {
         setError(err.message);
-        setLoading(false);
-        setActive(false);
+        setIsLoading(false);
       });
-  }, []);
+  }, [selectedGenre]);
 
-  return { games, error, isLoading, isActive };
+  return { games, isLoading, error };
 };

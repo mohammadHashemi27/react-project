@@ -1,7 +1,7 @@
 import { Button, HStack } from "@chakra-ui/react";
-import { useColorMode } from "./ui/color-mode";
+import { useColorMode, useColorModeValue } from "./ui/color-mode";
 import { useState } from "react";
-import { MdDarkMode, MdLightMode } from "react-icons/md";
+import { CgDarkMode } from "react-icons/cg";
 
 export const ColorSwitch = () => {
   const { toggleColorMode } = useColorMode();
@@ -14,15 +14,20 @@ export const ColorSwitch = () => {
 
   return (
     <Button
-      variant="solid"
-      bg="purple.500"
-      color="white"
-      _hover={{ bg: "purple.600" }}
+      variant="ghost"
+      color={useColorModeValue("gray.800", "white")}
+      _hover={{
+        bg: useColorModeValue("black.200", "white.600"),
+        transform: "scale(1.1)",
+      }}
+      _active={{ bg: useColorModeValue("gray.300", "gray.700") }}
       onClick={handleClick}
+      borderRadius="full"
+      p={2}
+      transition="all 0.2s ease"
     >
-      <HStack gap={2}>
-        {active ? <MdDarkMode size={20} /> : <MdLightMode size={20} />}
-        {active ? "Dark Mode" : "Light Mode"}
+      <HStack>
+        {active ? <CgDarkMode size={40} /> : <CgDarkMode size={40} />}
       </HStack>
     </Button>
   );

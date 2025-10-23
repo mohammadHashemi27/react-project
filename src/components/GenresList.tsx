@@ -1,4 +1,4 @@
-import { useGenres } from "@/hook/useGenres";
+import { useGenres, type Genres } from "@/hook/useGenres";
 import {
   HStack,
   Image,
@@ -10,7 +10,12 @@ import {
 } from "@chakra-ui/react";
 import { useColorModeValue } from "@/components/ui/color-mode";
 
-export const GenresList = () => {
+interface Props {
+  selectedGenre: Genres | null;
+  onSelectGenre: (genre: Genres) => void;
+}
+
+export const GenresList = ({ selectedGenre, onSelectGenre }: Props) => {
   const { genres, isActive } = useGenres();
   const bgColor = useColorModeValue("gray.100", "gray.800");
   const hoverBg = useColorModeValue("gray.200", "gray.700");
@@ -24,7 +29,7 @@ export const GenresList = () => {
       borderRadius="2xl"
       boxShadow="md"
       p={3}
-      w="240px"
+      w="200px"
       h="85vh"
       overflowY="auto"
       css={{
@@ -57,11 +62,13 @@ export const GenresList = () => {
           : genres.map((genre) => (
               <ListItem
                 key={genre.id}
+                onClick={() => onSelectGenre(genre)}
                 _hover={{
                   bg: hoverBg,
                   transform: "scale(1.02)",
                   transition: "all 0.2s ease",
                 }}
+                bg={selectedGenre?.id === genre.id ? hoverBg : "transparent"}
                 borderRadius="md"
                 p={2}
                 cursor="pointer"
@@ -73,7 +80,13 @@ export const GenresList = () => {
                     borderRadius="md"
                     objectFit="cover"
                   />
-                  <Text fontWeight="medium" fontSize="sm" color={textColor}>
+                  <Text
+                    fontWeight={
+                      selectedGenre?.id === genre.id ? "bold" : "medium"
+                    }
+                    fontSize="sm"
+                    color={textColor}
+                  >
                     {genre.name}
                   </Text>
                 </HStack>
