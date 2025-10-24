@@ -1,5 +1,6 @@
 import { useState } from "react";
 import {
+  Box,
   Grid,
   GridItem,
   HStack,
@@ -12,6 +13,7 @@ import { GenresList } from "./components/GenresList";
 import type { Genres } from "@/hook/useGenres";
 import Platform from "./components/Platform";
 import { SortDropdown } from "./components/Sort";
+import { GameHeading } from "./components/GameHeading";
 
 function App() {
   const [selectedGenre, setSelectedGenre] = useState<Genres | null>(null);
@@ -44,6 +46,9 @@ function App() {
       </Show>
 
       <GridItem area="main" padding={2}>
+        <Box marginBottom={5}>
+          <GameHeading selectedGenre={selectedGenre} />
+        </Box>
         <HStack marginBottom={5}>
           <Platform
             selectedPlatform={selectedPlatform}

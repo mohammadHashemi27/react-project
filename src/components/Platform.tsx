@@ -1,4 +1,4 @@
-// PlatformDropdown.tsx
+
 import { Button, Menu, Portal } from "@chakra-ui/react";
 import { usePlatforms } from "@/hook/usePlatforms";
 import { useColorModeValue } from "@/components/ui/color-mode";
