@@ -13,7 +13,7 @@ import { FaXbox, FaPlaystation, FaGamepad } from "react-icons/fa";
 import { BsNintendoSwitch } from "react-icons/bs";
 import { FaWindows } from "react-icons/fa6";
 import type { JSX, Key } from "react";
-
+import { HiOutlineCloudDownload } from "react-icons/hi";
 interface Props {
   game: Game;
 }
@@ -99,7 +99,7 @@ export const GameCard = ({ game }: Props) => {
 
       <Card.Footer justifyContent="center">
         <Button colorScheme="purple" variant="outline" borderRadius="full">
-          Buy now
+          DownLoad <HiOutlineCloudDownload />
         </Button>
       </Card.Footer>
     </Card.Root>

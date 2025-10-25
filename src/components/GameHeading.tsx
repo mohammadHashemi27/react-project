@@ -1,8 +1,8 @@
 import { Heading, Stack } from "@chakra-ui/react";
-import type { Genres } from "@/hook/useGenres"; // اگر تایپ داری
+import type { Genres } from "@/hook/useGenres";
 
 interface Props {
-  selectedGenre?: Genres | null; // ژانر انتخاب‌شده از والد
+  selectedGenre?: Genres | null; 
 }
 
 export const GameHeading = ({ selectedGenre }: Props) => {

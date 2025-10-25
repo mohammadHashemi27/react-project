@@ -1,7 +1,6 @@
 // usePlatforms.ts
 import { useEffect, useState } from "react";
 import axios from "axios";
-
 export interface Platform {
   id: number;
   name: string;
@@ -16,12 +15,10 @@ const RAWG_API_KEY = "66aa294028d0476ea552012b99adad79";
 
 export const usePlatforms = () => {
   const [platforms, setPlatforms] = useState<Platform[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isActive, setActive] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    setIsLoading(true);
-
     const url = encodeURIComponent(
       `https://api.rawg.io/api/platforms/lists/parents?key=${RAWG_API_KEY}`
     );
@@ -32,13 +29,13 @@ export const usePlatforms = () => {
       .then((res) => {
         const data: FetchPlatformsResponse = JSON.parse(res.data.contents);
         setPlatforms(data.results);
-        setIsLoading(false);
+        setActive(false);
       })
       .catch((err) => {
         setError(err.message);
-        setIsLoading(false);
+        setActive(false);
       });
   }, []);
 
-  return { platforms, isLoading, error };
+  return { platforms, isActive, error };
 };
