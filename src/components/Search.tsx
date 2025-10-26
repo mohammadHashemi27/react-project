@@ -2,6 +2,7 @@
 
 import { Input, InputGroup, Box } from "@chakra-ui/react";
 import { useColorModeValue } from "@/components/ui/color-mode";
+import { LuSearch } from "react-icons/lu";
 
 interface Props {
   searchText: string;
@@ -14,7 +15,7 @@ export const Search = ({ searchText, setSearchText }: Props) => {
 
   return (
     <Box w="full" maxW="400px">
-      <InputGroup>
+      <InputGroup startElement={<LuSearch />}>
         <Input
           value={searchText}
           onChange={(e) => setSearchText(e.target.value)}
